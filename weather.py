@@ -4,15 +4,13 @@ from pprint import pprint
 import requests
 from datetime import datetime, timedelta
 
-#TODO add chance of rain
 #TODO add some summary data
-#TODO add AQI info
 #TODO add keypress for next day's weather
 
 load_dotenv()
 
 URL = "https://api.weatherapi.com/v1/forecast.json"
-PARAMS = {'q': '43206', 'days': 2, 'key': os.getenv('API_KEY')}
+PARAMS = {'q': '43206', 'days': 2, 'aqi': 'yes', 'key': os.getenv('API_KEY')}
 
 response = requests.get(url = URL, params = PARAMS)
 
@@ -20,8 +18,8 @@ data = response.json()
 days = data['forecast']['forecastday']
 
 def print_header():
-    print('\n\tTime\tTemp\tCond.')
-    print('\t---------------------\n')
+    print('\n\tTime\tTemp\tCond.\t\t%Prec.\t AQI')
+    print('\t------------------------------------------\n')
 
 def get_hour(time):
     return time[-5:]
@@ -43,7 +41,15 @@ for day in days:
     for hour in hours:
         weather = ''
         
-        weather += '\t' + get_hour(hour['time']) + '\t' + str(hour['temp_f']) + '\t' + hour['condition']['text']
+        weather += '\t' + get_hour(hour['time'])
+        weather += '\t' + str(hour['temp_f'])
+        weather += '\t' + hour['condition']['text']
+        
+        if len(hour['condition']['text']) < 8:
+            weather += '\t'
+        
+        weather += '\t' + str(hour['chance_of_rain']) + '%'
+        weather += '\t' + str(hour['air_quality']['us-epa-index'])
         
         if is_current_hour(hour['time']):
             weather += ' <------- Current Hour'
