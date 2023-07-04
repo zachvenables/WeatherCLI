@@ -12,5 +12,5 @@ You're going to need to head over to https://www.weatherapi.com and create an ac
 You're going to need an API Key associated with the account.  From the Weather API site on the Dashboard page when you're logged in, at the top copy the 31 character key.
 
 ## Step Three - Add key to project
-In the WeatherCLI folder, create a new file title .env with no suffix. 
+In the WeatherCLI folder, create a new file title .env with no suffix.<br>  
 Then add the line: API_KEY=(Paste your API key here)
