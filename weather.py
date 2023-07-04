@@ -9,12 +9,10 @@ from datetime import datetime, timedelta
 #TODO add AQI info
 #TODO add keypress for next day's weather
 
-
-
 load_dotenv()
 
 URL = "https://api.weatherapi.com/v1/forecast.json"
-PARAMS = {'q': '43206', 'days': 3, 'key': os.getenv('API_KEY')}
+PARAMS = {'q': '43206', 'days': 2, 'key': os.getenv('API_KEY')}
 
 response = requests.get(url = URL, params = PARAMS)
 
