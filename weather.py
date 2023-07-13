@@ -45,7 +45,9 @@ for day in days:
         weather += '\t' + get_hour(hour['time'])
         weather += '\t' + str(hour['temp_f'])
         if(hour['air_quality'] and hour['air_quality']['us-epa-index']):
-            weather += '\t' + str(hour['air_quality']['us-epa-index'])    
+            weather += '\t' + str(hour['air_quality']['us-epa-index'])
+        else:
+            weather += '\t'   
         weather += '\t' + str(hour['chance_of_rain']) + '%'
         weather += '\t' + hour['condition']['text']
         
@@ -54,9 +56,9 @@ for day in days:
         
         print(weather)
     print()
-    inp = input("Press enter to see the following day's forecast. Type \'quit\' to quit...")
+    inp = input("Press enter to see the following day's forecast. Type \'q\' to quit...")
     
-    if(inp == 'quit'):
+    if(inp == 'q'):
         break
     
 input("Press enter to close.")
