@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 load_dotenv()
 
 URL = "https://api.weatherapi.com/v1/forecast.json"
-PARAMS = {'q': '43206', 'days': 7, 'aqi': 'yes', 'key': os.getenv('API_KEY')}
+PARAMS = {'q': os.getenv('ZIP_CODE'), 'days': 3, 'key': os.getenv('API_KEY')}
 
 response = requests.get(url = URL, params = PARAMS)
 
@@ -18,8 +18,8 @@ data = response.json()
 days = data['forecast']['forecastday']
 
 def print_header():
-    print('\n\tTime\tTemp\t AQI\t%Prec.\tCond.')
-    print('\t------------------------------------------\n')
+    print('\tTime\tTemp\t%Prec.\tCond.')
+    print('\t------------------------------------------')
 
 def get_hour(time):
     return time[-5:]
@@ -44,10 +44,7 @@ for day in days:
         weather = ''
         weather += '\t' + get_hour(hour['time'])
         weather += '\t' + str(hour['temp_f'])
-        if(hour['air_quality'] and hour['air_quality']['us-epa-index']):
-            weather += '\t' + str(hour['air_quality']['us-epa-index'])
-        else:
-            weather += '\t'   
+        
         weather += '\t' + str(hour['chance_of_rain']) + '%'
         weather += '\t' + hour['condition']['text']
         
@@ -56,9 +53,8 @@ for day in days:
         
         print(weather)
     print()
-    inp = input("Press enter to see the following day's forecast. Type \'q\' to quit...")
+    inp = input("Press enter to see the following day's forecast. Type \'q\' to quit...\n")
     
     if(inp == 'q'):
         break
     
-input("Press enter to close.")
